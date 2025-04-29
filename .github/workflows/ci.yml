@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install deps
+        run: npm ci --ignore-scripts
+      - name: Lint
+        run: npm run lint --if-present
+      - name: Build
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || 'test-key' }}
+        run: npm run build --if-present 

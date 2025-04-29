@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Orion – Dark Sci-Fi AI Text Adventure
 
-## Getting Started
+Orion is a web-first, chat-driven interactive fiction powered by OpenAI GPT-4o function calling.  Players decrypt ciphers, analyse images, and hack their way through a dystopian world dominated by an all-seeing AI.
 
-First, run the development server:
+---
+
+## Quick start
 
 ```bash
+# clone
+git clone https://github.com/rahilsinghi/Orion.git
+cd Orion
+
+# install deps
+npm install
+
+# add your OpenAI key
+cp .env.example .env.local
+# then edit .env.local and paste:
+# OPENAI_API_KEY=sk-…
+
+# run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+Visit <http://localhost:3000> and start playing.
+
+---
+
+## Project structure
+
+```
+src/
+  app/            ← Next 14 App Router
+    api/
+      chat/        ← AI orchestrator (function-calling, game state)
+      tools/       ← Simple tool endpoints (decode_caesar, analyze_image)
+  components/      ← React UI (chat view)
+  lib/             ← Helpers (OpenAI singleton)
+  types/           ← Shared TS types
+  utils/           ← Pure utilities (Caesar decoder, …)
+public/            ← Static assets (images, SFX)
+.github/workflows/ ← CI pipeline
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command            | Purpose                                |
+|--------------------|----------------------------------------|
+| `npm run dev`      | Next.js dev server with hot-reload.    |
+| `npm run lint`     | ESLint + TypeScript checks.            |
+| `npm run build`    | Production build (static + server).    |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Environment variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Var               | Description                      |
+|-------------------|----------------------------------|
+| `OPENAI_API_KEY`  | Your OpenAI secret key (server)  |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+► **Never** commit real keys – store them in GitHub Secrets or `.env.local` (which is git-ignored).
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## CI / CD
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A lightweight GitHub Actions workflow lint-checks and builds on every push.  See `.github/workflows/ci.yml`.
+
+Deploy effortlessly to [Vercel](https://vercel.com/new) – the app is already Next 14-compatible.
+
+---
+
+## Roadmap
+
+-  ✅ Act I vertical slice (cipher, locker code, image QR, auto-transition)
+-  ⬜ Act II content & puzzles
+-  ⬜ Adaptive hint system
+-  ⬜ Soundscape & glitch effects
+-  ⬜ Save / Load across devices (supabase)
+
+PRs & issues welcome – let's push the limits of AI-driven games 🚀
